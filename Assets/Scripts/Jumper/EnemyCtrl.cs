@@ -24,6 +24,7 @@ public class EnemyCtrl : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log(collision.collider.name);
         if (collision.collider.tag == "Ground") {
             transform.SetParent(collision.collider.transform);
         }

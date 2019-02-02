@@ -7,6 +7,10 @@ public class PlayerCtrl : MonoBehaviour
     [Header("Jump")]
     public float JumpForce = 2f;
 
+    [Header("Collision Effects")]
+    public ParticleSystem OnGroundEffect;
+    public float OnGroundEffectDelay;
+
     private Rigidbody RB;
 
     void Awake()
@@ -14,12 +18,19 @@ public class PlayerCtrl : MonoBehaviour
         RB = GetComponent<Rigidbody>();
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider && !OnGroundEffect.isPlaying) {
+            OnGroundEffect.Play();
+        }
+    }
+
     void Jump()
     {
         if (RB == null) {
             return;
         }
-
+        OnGroundEffect.Stop();
         RB.AddForce(Vector2.up * JumpForce, ForceMode.Impulse);
     }
 
