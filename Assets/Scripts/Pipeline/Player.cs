@@ -5,10 +5,6 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    private int _grabbedGifts = 0;
-
-    public Text CounterLabel;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +13,6 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        CounterLabel.text = _grabbedGifts.ToString();
     }
 
     private void Update()
@@ -31,7 +26,9 @@ public class Player : MonoBehaviour
                 if (hit.collider.gameObject.tag == "Gift")
                 {
                     Destroy(hit.collider.gameObject);
-                    _grabbedGifts++;
+
+                    var state = GameObject.Find("Root").GetComponent<State>();
+                    state.HandleGrabbedGift();
                 }
             }
         }
